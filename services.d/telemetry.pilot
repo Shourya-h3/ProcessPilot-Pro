@@ -1,0 +1,32 @@
+# ProcessPilot Pro Unit Configuration: Kernel Watchdog Telemetry Daemon
+[Unit]
+Description=Hardware and Kernel Watchdog Telemetry Daemon
+Requires=
+Wants=
+AutoStart=true
+
+[Service]
+ExecStart=./bin/pilot_mock_svc telemetry
+WorkingDirectory=.
+Restart=exponential-backoff
+Environment=DRIVER_PATH=/dev/process_pilot;LOG_INTERVAL=1
+
+[HealthCheck]
+Type=kernel
+Endpoint=
+IntervalMs=1000
+TimeoutMs=500
+MaxRetries=3
+KernelWatchdogMs=1500
+
+[SelfHealing]
+InitialBackoffMs=500
+MaxBackoffMs=10000
+BackoffMultiplier=2.0
+MaxCrashCount=5
+CrashWindowSec=60
+
+[ResourceLimits]
+MemoryMaxBytes=67108864
+CpuQuotaPct=20
+MaxPids=10

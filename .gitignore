@@ -1,0 +1,25 @@
+# Build outputs
+build/
+bin/
+*.o
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.order
+*.symvers
+.*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+
+# Logs and runtime sockets
+logs/
+*.log
+/tmp/process_pilot*.sock
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*~

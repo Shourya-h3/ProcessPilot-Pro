@@ -1,0 +1,31 @@
+# ProcessPilot Pro Unit Configuration: Database Service
+[Unit]
+Description=Primary Relational Database Engine
+Requires=
+Wants=
+AutoStart=true
+
+[Service]
+ExecStart=./bin/pilot_mock_svc database
+WorkingDirectory=.
+Restart=exponential-backoff
+Environment=DB_PORT=5432;DB_HOST=127.0.0.1;WORKERS=4
+
+[HealthCheck]
+Type=exec
+Endpoint=true
+IntervalMs=2000
+TimeoutMs=1000
+MaxRetries=3
+
+[SelfHealing]
+InitialBackoffMs=500
+MaxBackoffMs=15000
+BackoffMultiplier=2.0
+MaxCrashCount=5
+CrashWindowSec=60
+
+[ResourceLimits]
+MemoryMaxBytes=536870912
+CpuQuotaPct=80
+MaxPids=50

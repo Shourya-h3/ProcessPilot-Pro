@@ -1,0 +1,31 @@
+# ProcessPilot Pro Unit Configuration: Frontend Gateway Service
+[Unit]
+Description=Reverse Proxy and Web Dashboard Gateway
+Requires=backend.pilot
+Wants=
+AutoStart=true
+
+[Service]
+ExecStart=./bin/pilot_mock_svc frontend
+WorkingDirectory=.
+Restart=exponential-backoff
+Environment=HTTP_PORT=80;BACKEND_URL=http://127.0.0.1:8080
+
+[HealthCheck]
+Type=exec
+Endpoint=true
+IntervalMs=3000
+TimeoutMs=1000
+MaxRetries=3
+
+[SelfHealing]
+InitialBackoffMs=1000
+MaxBackoffMs=30000
+BackoffMultiplier=2.0
+MaxCrashCount=5
+CrashWindowSec=60
+
+[ResourceLimits]
+MemoryMaxBytes=134217728
+CpuQuotaPct=40
+MaxPids=30

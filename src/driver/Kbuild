@@ -1,0 +1,2 @@
+obj-m += pilot_driver.o
+ccflags-y := -I$(src)/../../include

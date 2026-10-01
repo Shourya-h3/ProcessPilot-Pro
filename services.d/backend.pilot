@@ -1,0 +1,31 @@
+# ProcessPilot Pro Unit Configuration: Backend API Service
+[Unit]
+Description=Core REST/gRPC API Microservice
+Requires=database.pilot
+Wants=
+AutoStart=true
+
+[Service]
+ExecStart=./bin/pilot_mock_svc backend
+WorkingDirectory=.
+Restart=exponential-backoff
+Environment=API_PORT=8080;DB_HOST=127.0.0.1;NODE_ENV=production
+
+[HealthCheck]
+Type=exec
+Endpoint=true
+IntervalMs=2500
+TimeoutMs=1000
+MaxRetries=3
+
+[SelfHealing]
+InitialBackoffMs=1000
+MaxBackoffMs=20000
+BackoffMultiplier=2.0
+MaxCrashCount=5
+CrashWindowSec=60
+
+[ResourceLimits]
+MemoryMaxBytes=268435456
+CpuQuotaPct=60
+MaxPids=40
